@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <ctype.h>
+
+int main() {
+    char in[] = "sum = 30 + total \n \t // comment \n count = 5";
+    int i = 0;
+
+    printf("--- Lexical Analysis ---\n");
+    while (in[i] != '\0') {
+        // 1. Skip spaces, tabs, and newlines
+        if (in[i] == ' ' || in[i] == '\t' || in[i] == '\n') { i++; continue; }
+
+        // 2. Skip single-line comments
+        if (in[i] == '/' && in[i+1] == '/') {
+            while (in[i] != '\0' && in[i] != '\n') i++;
+            continue;
+        }
+
+        // 3. Identify Operators
+        if (in[i] == '+' || in[i] == '-' || in[i] == '*' || in[i] == '/' || in[i] == '=') {
+            printf("Operator   : %c\n", in[i++]);
+            continue;
+        }
+
+        // 4. Identify Constants
+        if (isdigit(in[i])) {
+            printf("Constant   : ");
+            while (isdigit(in[i])) printf("%c", in[i++]);
+            printf("\n");
+            continue;
+        }
+
+        // 5. Identify Identifiers (Restricted to 31 chars max)
+        if (isalpha(in[i]) || in[i] == '_') {
+            printf("Identifier : ");
+            int len = 0;
+            while (isalnum(in[i]) || in[i] == '_') {
+                if (len++ < 31) printf("%c", in[i]);
+                i++;
+            }
+            printf("\n");
+            continue;
+        }
+        i++; // Catch-all increment
+    }
+    return 0;
+}
