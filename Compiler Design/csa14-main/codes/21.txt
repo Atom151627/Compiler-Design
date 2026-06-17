@@ -1,0 +1,19 @@
+1. Start
+2. Initialize count = 0
+3. Read input string
+4. For each character in string:
+      If character is (a, e, i, o, u, A, E, I, O, U)
+            count = count + 1
+5. Print count
+6. Stop
+
+
+Example
+
+Input:
+
+Hello World
+
+Output:
+
+Number of vowels = 3
